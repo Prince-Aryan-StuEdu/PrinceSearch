@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prince Aryan Search</title>
+    <title>PrinceSearch - Futuristic Search</title>
+    <link rel="icon" href="https://play.google.com/store/apps/details?id=com.foodpicasso.parfumshop" type="image/png">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
         body {
             font-family: 'Orbitron', sans-serif;
             text-align: center;
@@ -15,23 +18,43 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
+
         h2 {
-            font-size: 2rem;
-            text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+            font-size: 2.5rem;
+            text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.9);
+            animation: glow 2s infinite alternate;
         }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6);
+            }
+            to {
+                text-shadow: 0px 0px 20px rgba(0, 255, 255, 1);
+            }
+        }
+
         input {
-            padding: 12px;
+            padding: 14px;
             width: 350px;
             font-size: 18px;
             border-radius: 25px;
-            border: none;
+            border: 2px solid rgba(0, 255, 255, 0.8);
             outline: none;
             text-align: center;
             background: rgba(255, 255, 255, 0.2);
             color: white;
-            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+            box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.8);
+            transition: 0.3s ease-in-out;
         }
+
+        input:focus {
+            box-shadow: 0px 0px 20px rgba(0, 255, 255, 1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
         button {
             margin-top: 20px;
             padding: 12px 25px;
@@ -44,28 +67,76 @@
             cursor: pointer;
             box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.8);
             transition: 0.3s;
+            position: relative;
+            overflow: hidden;
         }
+
         button:hover {
             background: #ff4b2b;
             box-shadow: 0px 0px 20px rgba(255, 0, 0, 1);
+            transform: scale(1.05);
         }
+
+        button::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 10%);
+            transition: 0.6s;
+            transform: translate(-50%, -50%) scale(0);
+        }
+
+        button:active::before {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0;
+            transition: 0s;
+        }
+
+        .loader {
+            display: none;
+            margin-top: 20px;
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid #ff416c;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h2>🚀Prince Search 🌌</h2>
+    <h2>🚀 PrinceSearch - The Futuristic Search Engine 🌌</h2>
     <input type="text" id="searchQuery" placeholder="Enter your search...">
     <button onclick="searchGoogle()">🔍 Search</button>
-    <p style="margin-top: 30px; font-size: 16px; opacity: 0.8; font-family: 'Orbitron', sans-serif;">
+
+    <div class="loader" id="loading"></div>
+
+    <p class="footer">
         This website is developed by <strong>Prince Aryan</strong>, a young enthusiast and web developer.
     </p>
-
 
     <script>
         function searchGoogle() {
             let query = document.getElementById("searchQuery").value;
             if(query) {
-                window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                document.getElementById("loading").style.display = "block";
+                setTimeout(() => {
+                    window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                }, 1000);
             } else {
                 alert("Please enter a search query!");
             }
